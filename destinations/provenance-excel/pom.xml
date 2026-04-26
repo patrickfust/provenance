@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dk.fust.provenance</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>provenance-destination-excel</artifactId>
+    <packaging>jar</packaging>
+    <name>Destination - Excel</name>
+    <description>Provenance Destination with Excel functionality</description>
+    <url>https://github.com/patrickfust/provenance</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>dk.fust.provenance</groupId>
+            <artifactId>provenance-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.fust.provenance</groupId>
+            <artifactId>provenance-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.fust.provenance</groupId>
+            <artifactId>provenance-generator-data-dictionary</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.fust.provenance</groupId>
+            <artifactId>provenance-test-utilities</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.5.1</version>
+        </dependency>
+    </dependencies>
+
+</project>

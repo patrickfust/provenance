@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dk.fust.provenance</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>provenance-gradle-plugin</artifactId>
+    <packaging>jar</packaging>
+    <name>Build Tool - Gradle plugin</name>
+    <description>Provenance Build Tool - Gradle plugin</description>
+    <url>https://github.com/patrickfust/provenance</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>dk.fust.provenance</groupId>
+            <artifactId>provenance-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.fust.provenance</groupId>
+            <artifactId>provenance-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.fust.provenance</groupId>
+            <artifactId>provenance-test-utilities</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Gradle API for plugin development -->
+        <dependency>
+            <groupId>org.gradle</groupId>
+            <artifactId>gradle-tooling-api</artifactId>
+            <version>7.3-20210825160000+0000</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.gradleplugins</groupId>
+            <artifactId>gradle-api</artifactId>
+            <version>8.11.1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>

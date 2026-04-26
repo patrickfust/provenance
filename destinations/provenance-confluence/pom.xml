@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dk.fust.provenance</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>provenance-destination-confluence</artifactId>
+    <packaging>jar</packaging>
+    <name>Destination - Confluence</name>
+    <description>Provenance Destination with Confluence functionality</description>
+    <url>https://github.com/patrickfust/provenance</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>dk.fust.provenance</groupId>
+            <artifactId>provenance-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.fust.provenance</groupId>
+            <artifactId>provenance-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.fust.provenance</groupId>
+            <artifactId>provenance-test-utilities</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.21.0</version>
+        </dependency>
+    </dependencies>
+
+</project>

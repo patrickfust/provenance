@@ -1,0 +1,21 @@
+- className: dk.fust.provenance.generator.datadict.DataDictionaryConfiguration
+  provenanceFile: provenance.yaml
+  columnTable:
+    export: true
+    header: My header
+  columnMandatory:
+    export: false
+  columnDescription:
+    alignment: RIGHT
+  tableFormatter:
+    className: dk.fust.provenance.format.table.HTMLTableFormatter
+  destination:
+    className: dk.fust.provenance.destination.FileDestination
+    file: data-dictionary.html
+- className: dk.fust.provenance.generator.datadict.DataDictionaryMetaInfoConfiguration
+  provenanceFile: provenance.yml
+  tableFormatter:
+    className: dk.fust.provenance.format.table.JsonTableFormatter
+  destination:
+    className: dk.fust.provenance.destination.FileDestination
+    file: data-dictionary-meta-info.json

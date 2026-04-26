@@ -1,0 +1,11 @@
+$schema: ../../../../provenance-api/src/main/resources/provenance-schema.json
+tables:
+  - name: something
+    fields:
+      - name: name
+        comment: some comment
+        dataType: bigint
+    indexes:
+      - name: idx_that_is_pointless
+        fields:
+          - does_not_exist

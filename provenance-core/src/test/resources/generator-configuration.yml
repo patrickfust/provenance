@@ -1,0 +1,15 @@
+- className: dk.fust.provenance.MockGeneratorConfiguration
+  provenanceFile: provenance.yaml
+  destination:
+    className: dk.fust.provenance.destination.MarkdownDestination
+    file: README.md
+  anInt: 1
+  aBigInteger: 2
+  aBoolean: true
+  aBigBoolean: true
+  aLong: 3
+  aBigLong: 4
+  aString: "some string"
+  mockEnum: B
+- className: dk.fust.provenance.MockGeneratorConfiguration
+  provenanceFile: provenance2.yaml

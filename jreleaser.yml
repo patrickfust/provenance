@@ -1,0 +1,109 @@
+# $schema: "jreleaser-schema-1.18.0.json"
+project:
+  name: provenance
+  version: 1.0.0
+  description: "One model. One truth. Endless outputs. Provenance is a framework for generating documentation and artifacts"
+  longDescription: "One model. One truth. Endless outputs.. Provenance lets you define your data model in YAML or JSON and generate ER diagrams, SQL scripts, data lineage, data dictionaries, and more — all from a single source of truth."
+
+  authors:
+    - Patrick Fust
+  license: Apache-2.0
+  links:
+    homepage: https://github.com/patrickfust/provenance
+  extraProperties:
+    java.groupId: dk.fust.provenance
+    java.version: "1"
+  inceptionYear: "2026"
+  languages:
+    java:
+      groupId: dk.fust.provenance
+
+release:
+  github:
+    enabled: true
+    sign: true
+    owner: patrickfust
+    overwrite: true
+
+distributions:
+  provenance-api:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: provenance-api/target/provenance-api-{{projectVersion}}.jar
+  provenance-core:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: provenance-core/target/provenance-core-{{projectVersion}}.jar
+  provenance-gradle:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: build-tools/provenance-gradle-plugin/target/provenance-gradle-plugin-{{projectVersion}}.jar
+  provenance-maven:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: build-tools/provenance-maven-plugin/target/provenance-maven-plugin-{{projectVersion}}.jar
+
+  # destinations
+  provenance-destination-confluence:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: destinations/provenance-confluence/target/provenance-destination-confluence-{{projectVersion}}.jar
+  provenance-destination-csv:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: destinations/provenance-csv/target/provenance-destination-csv-{{projectVersion}}.jar
+  provenance-destination-excel:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: destinations/provenance-excel/target/provenance-destination-excel-{{projectVersion}}.jar
+
+  # Generators
+  provenance-generator-data-dictionary:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: generators/provenance-data-dictionary/target/provenance-generator-data-dictionary-{{projectVersion}}.jar
+  provenance-generator-datalineage:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: generators/provenance-datalineage/target/provenance-generator-datalineage-{{projectVersion}}.jar
+  provenance-generator-erdiagram:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: generators/provenance-erdiagram/target/provenance-generator-erdiagram-{{projectVersion}}.jar
+  provenance-generator-sql-script:
+    java:
+      groupId: dk.fust.provenance
+    artifacts:
+      - path: generators/provenance-sql-script/target/provenance-generator-sql-script-{{projectVersion}}.jar
+
+# File signing is always active
+signing:
+  active: ALWAYS
+  pgp:
+    armored: true
+
+# Deploy JARs and POMs to Maven Central
+deploy:
+  maven:
+    mavenCentral:
+      sonatype:
+        active: RELEASE
+        url: https://central.sonatype.com/api/v1/publisher
+        stagingRepositories:
+          - target/staging-deploy
+        sign: true
+        checksums: true
+        sourceJar: true
+        javadocJar: true
+        applyMavenCentralRules: true
+        maxRetries: 120

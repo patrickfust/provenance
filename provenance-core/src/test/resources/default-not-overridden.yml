@@ -1,0 +1,5 @@
+- className: dk.fust.provenance.MockGeneratorConfiguration
+  provenanceFile: documentation.yaml
+  destination:
+    className: dk.fust.provenance.destination.MarkdownDestination
+    file: README.md

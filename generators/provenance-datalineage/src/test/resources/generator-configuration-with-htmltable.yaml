@@ -1,0 +1,17 @@
+- className: dk.fust.provenance.generator.datalineage.DataLineageConfiguration
+  provenanceFile: provenance.yml
+  key: data-lineage
+  filterTags: data-lineage
+  tableFormatter:
+    className: dk.fust.provenance.format.table.HTMLTableFormatter
+    dataFields:
+      table-width: "1800"
+    columnWidths:
+      - "255"
+      - "328"
+      - "114"
+      - "115"
+      - "149"
+      - "242"
+  destination:
+    className: dk.fust.provenance.destination.MockDestination

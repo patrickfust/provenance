@@ -1,0 +1,8 @@
+$schema: ../../../../../provenance-generator-api/src/main/resources/provenance-schema.json
+tables:
+  - name: table_with_integer_array
+    createTableScript: create-something-with-integer-array.sql
+    fields:
+      - name: name
+        comment: integer array field
+        dataType: int_array

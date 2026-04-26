@@ -1,0 +1,9 @@
+$schema: ../../../../../provenance-generator-api/src/main/resources/provenance-schema.json
+provenanceTitle: The provenance title
+databaseName: DB name
+tables:
+  - name: table_a
+    fields:
+      - name: field_a
+        dataType: int
+        source: external.external_table_a.external_field_a

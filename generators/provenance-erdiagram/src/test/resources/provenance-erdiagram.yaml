@@ -1,0 +1,34 @@
+$schema: ../../../../../provenance-generator-api/src/main/resources/provenance-schema.json
+provenanceTitle: The provenance title
+databaseName: The database name
+schemaName: xxx
+tables:
+  - name: something
+    tags:
+      - domain-model
+    fields:
+      - name: name
+        comment: some comment
+        dataType: bigint
+  - name: table_a
+    tags:
+      - domain-model
+    fields:
+      - name: field_a
+        dataType: int
+        foreignKey:
+          tableName: table_b
+          columnName: field_b
+  - name: table_b
+    fields:
+      - name: field_b
+        dataType: int
+  - name: combined_foreign_key_table
+    fields:
+      - name: field_b_combined
+        dataType: int
+    foreignKeys:
+      - tableName: table_b
+        columns:
+          - referencingColumn: field_b_combined
+            referenceColumn: field_b

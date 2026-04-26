@@ -1,0 +1,42 @@
+package dk.fust.provenance
+
+import dk.fust.provenance.model.Provenance
+import spock.lang.Specification
+import spock.lang.Unroll
+
+class ModelValidatorSpec extends Specification {
+
+    def "test validate empty documentation"() {
+        when:
+        Provenance provenance = new Provenance();
+        ModelValidator modelValidator = new ModelValidator(provenance);
+        modelValidator.validate()
+
+        then:
+        noExceptionThrown()
+    }
+
+    @Unroll
+    def "test validations for #filename"() {
+        given:
+        Provenance documentation = TestHelper.loadTestProvenance(filename)
+
+        when:
+        ModelValidator modelValidator = new ModelValidator(documentation)
+        modelValidator.validate()
+
+        then:
+        IllegalArgumentException illegalArgumentException = thrown(IllegalArgumentException)
+        illegalArgumentException.message == expectedValidationMessage
+
+        where:
+        filename                                     | expectedValidationMessage
+        'foreignKey-missing-column.yaml'             | 'table_a.field_a has foreign key without column name'
+        'foreignKey-table-not-exists.yaml'           | 'table_xxx.field_b does not exist. Is foreign key in table_a.field_a'
+        'foreignKey-table-column-not-exists.yaml'    | 'table_b.field_x does not exist. Is foreign key in table_a.field_a'
+        'foreignKey-wrong-datatype.yaml'             | 'table_b.field_b has different data types (UUID) compared to table_a.field_a (TEXT)'
+        'foreignKey-wrong-datatype-generatedId.yaml' | 'table_b.table_b_id has different data types (INT) compared to table_a.field_a (BIGINT)'
+        'foreignKeys-table-column-not-exists.yaml'   | 'parent_table.keyDontExists does not exist. Is foreign key in child_with_combined_foreign_keys.pointer_to_parent_key'
+    }
+
+}
