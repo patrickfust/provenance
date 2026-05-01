@@ -218,3 +218,4 @@ Read about how to use *Provenance*:
 | [Generation types](docs/generation-types.md)                 | The different types of generators that are available. |
 | [Build tools - Gradle](build-tools/provenance-gradle-plugin) | How to use *Provenance* with Gradle.                  |
 | [Build tools - Maven](build-tools/provenance-maven-plugin)   | How to use *Provenance* with Maven.                   |
+| [Demos](https://github.com/patrickfust/provenance-demos/)    | Examples of how to use *Provenance*.                  |
