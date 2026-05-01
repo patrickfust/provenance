@@ -5,7 +5,7 @@
 
     <groupId>dk.fust.provenance</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <packaging>pom</packaging>
     <name>Provenance</name>
     <description>One model. One truth. Endless outputs. Provenance lets you define your data model in YAML or JSON and generate ER diagrams, SQL scripts, data lineage, data dictionaries, and more — all from a single source of truth.</description>

@@ -1,7 +1,7 @@
 # $schema: "jreleaser-schema-1.18.0.json"
 project:
   name: provenance
-  version: 1.0.0
+  version: 1.1.0
   description: "One model. One truth. Endless outputs. Provenance is a framework for generating documentation and artifacts"
   longDescription: "One model. One truth. Endless outputs.. Provenance lets you define your data model in YAML or JSON and generate ER diagrams, SQL scripts, data lineage, data dictionaries, and more — all from a single source of truth."
 
@@ -106,4 +106,4 @@ deploy:
         sourceJar: true
         javadocJar: true
         applyMavenCentralRules: true
-        maxRetries: 120
+        maxRetries: 149
