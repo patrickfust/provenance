@@ -11,6 +11,10 @@ Converts a FormatTable into an Excel workbook.
 Because the generator will encode the binary bytes into base64 encoded String, you can use
 [Base64FileDestination](../../README.md#base64filedestination) to save the file as a regular Excel workbook.
 
+`ExcelBase64TableFormatter` also exposes `contentFingerprint(FormatTable)` which returns a deterministic SHA-256
+fingerprint based on workbook content. This is useful for change detection because raw Excel bytes can differ between
+writes even when the workbook content is unchanged.
+
 | Setting                   | Type                                              | Description                                                     | Default                                                                                                                                                                                      |
 |---------------------------|---------------------------------------------------|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | sheetName                 | String                                            | Name of the sheet                                               | `Sheet1`                                                                                                                                                                                     |

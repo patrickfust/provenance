@@ -159,8 +159,8 @@ public class DataDictionaryGenerator implements Generator {
     }
 
     private void sendTableToDestination(FormatTable formatTable, DataDictionaryConfiguration dataDictionaryConfiguration) throws IOException {
-        String table = dataDictionaryConfiguration.getTableFormatter().formatTable(formatTable);
-        dataDictionaryConfiguration.getDestination().sendDocumentToDestination(table, dataDictionaryConfiguration.getKey());
+        dataDictionaryConfiguration.getTableFormatter()
+                .formatTableAndSendToDestination(formatTable, dataDictionaryConfiguration.getDestination(), dataDictionaryConfiguration.getKey());
     }
 
 }
