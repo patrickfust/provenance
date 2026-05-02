@@ -42,6 +42,14 @@ public class ExcelBase64TableFormatter implements TableFormatter {
 
     private String sheetName = "Sheet1";
 
+    private String title;
+    private String author;
+    private String company;
+    private String category;
+    private String description;
+    private String subject;
+    private String keywords;
+
     @Override
     public void formatTableAndSendToDestination(FormatTable formatTable, Destination destination, String destinationInDestination) throws IOException {
         try (XSSFWorkbook workbook = FormatTableToExcel.toExcel(formatTable, makeExcelConfiguration())) {
@@ -104,6 +112,14 @@ public class ExcelBase64TableFormatter implements TableFormatter {
         excelConfiguration.setAutofilter(autofilter);
         excelConfiguration.setColumnCustomizations(columnCustomizations);
         excelConfiguration.setSheetName(sheetName);
+        excelConfiguration.setTitle(title);
+        excelConfiguration.setAuthor(author);
+        excelConfiguration.setCompany(company);
+        excelConfiguration.setCategory(category);
+        excelConfiguration.setDescription(description);
+        excelConfiguration.setSubject(subject);
+        excelConfiguration.setKeywords(keywords);
+
         excelConfiguration.validate();
         return excelConfiguration;
     }

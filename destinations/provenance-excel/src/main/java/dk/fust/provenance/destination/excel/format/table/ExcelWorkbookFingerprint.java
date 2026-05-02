@@ -89,6 +89,16 @@ public final class ExcelWorkbookFingerprint {
             try (DigestOutputStream digestOutputStream = new DigestOutputStream(OutputStream.nullOutputStream(), messageDigest);
                  DataOutputStream out = new DataOutputStream(digestOutputStream)) {
                 out.writeInt(FORMAT_VERSION);
+
+                // Write workbook properties
+                writeNullableString(out, workbook.getProperties().getCoreProperties().getTitle());
+                writeNullableString(out, workbook.getProperties().getCoreProperties().getCreator());
+                writeNullableString(out, workbook.getProperties().getCoreProperties().getCategory());
+                writeNullableString(out, workbook.getProperties().getCoreProperties().getDescription());
+                writeNullableString(out, workbook.getProperties().getCoreProperties().getSubject());
+                writeNullableString(out, workbook.getProperties().getCoreProperties().getKeywords());
+                writeNullableString(out, workbook.getProperties().getExtendedProperties().getCompany());
+
                 out.writeInt(workbook.getNumberOfSheets());
                 for (int sheetIdx = 0; sheetIdx < workbook.getNumberOfSheets(); sheetIdx++) {
                     writeSheet(workbook.getSheetAt(sheetIdx), out);

@@ -136,6 +136,30 @@ class ExcelBase64TableFormatterSpec extends Specification {
         originalFingerprint != changedStyleFingerprint
     }
 
+    def "content fingerprint changes when workbook metadata changes"() {
+        given:
+        ExcelBase64TableFormatter formatter = new ExcelBase64TableFormatter()
+        FormatTable table = TestData.generateTable()
+
+        String originalFingerprint = formatter.contentFingerprint(table)
+
+        when: 'title is set'
+        formatter.title = "My Report"
+        String changedMetadataFingerprint = formatter.contentFingerprint(table)
+
+        then:
+        originalFingerprint != changedMetadataFingerprint
+
+        when: 'author is set instead'
+        formatter.title = null
+        formatter.author = "John Doe"
+        String authorChangedFingerprint = formatter.contentFingerprint(table)
+
+        then:
+        originalFingerprint != authorChangedFingerprint
+        changedMetadataFingerprint != authorChangedFingerprint
+    }
+
     def "fingerprint is embedded in file and can be read back"() {
         given:
         ExcelBase64TableFormatter formatter = new ExcelBase64TableFormatter()
