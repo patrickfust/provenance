@@ -8,6 +8,7 @@ import dk.fust.provenance.format.table.FormatTable;
 import dk.fust.provenance.format.table.Row;
 import dk.fust.provenance.util.Assert;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ooxml.POIXMLProperties;
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -30,6 +31,7 @@ public class FormatTableToExcel {
     public static XSSFWorkbook toExcel(FormatTable formatTable, ExcelConfiguration excelConfiguration) {
         log.debug("Formatting table as Excel");
         XSSFWorkbook workbook = new XSSFWorkbook();
+        setWorkbookProperties(workbook, excelConfiguration);
         XSSFSheet sheet = createSheet(workbook, excelConfiguration);
         ExcelStylesContainer styles = new ExcelStylesContainer(workbook, excelConfiguration.getExcelStyles());
         int rowIdx = 0;
@@ -59,6 +61,39 @@ public class FormatTableToExcel {
             setAutoFilter(sheet, maxCol, rowIdx);
         }
         return workbook;
+    }
+
+    private static void setWorkbookProperties(XSSFWorkbook workbook, ExcelConfiguration excelConfiguration) {
+        setCoreProperties(workbook, excelConfiguration);
+        setExtendedProperties(workbook, excelConfiguration);
+    }
+
+    private static void setExtendedProperties(XSSFWorkbook workbook, ExcelConfiguration excelConfiguration) {
+        if (excelConfiguration.getCompany() != null) {
+            workbook.getProperties().getExtendedProperties().setCompany(excelConfiguration.getCompany());
+        }
+    }
+
+    private static void setCoreProperties(XSSFWorkbook workbook, ExcelConfiguration excelConfiguration) {
+        POIXMLProperties.CoreProperties coreProperties = workbook.getProperties().getCoreProperties();
+        if (excelConfiguration.getTitle() != null) {
+            coreProperties.setTitle(excelConfiguration.getTitle());
+        }
+        if (excelConfiguration.getAuthor() != null) {
+            coreProperties.setCreator(excelConfiguration.getAuthor());
+        }
+        if (excelConfiguration.getDescription() != null) {
+            coreProperties.setDescription(excelConfiguration.getDescription());
+        }
+        if (excelConfiguration.getSubject() != null) {
+            coreProperties.setSubjectProperty(excelConfiguration.getSubject());
+        }
+        if (excelConfiguration.getKeywords() != null) {
+            coreProperties.setKeywords(excelConfiguration.getKeywords());
+        }
+        if (excelConfiguration.getCategory() != null) {
+            coreProperties.setCategory(excelConfiguration.getCategory());
+        }
     }
 
     private static void setAutoFilter(XSSFSheet sheet, int maxCol, int maxRow) {

@@ -11,6 +11,10 @@ Converts a FormatTable into an Excel workbook.
 Because the generator will encode the binary bytes into base64 encoded String, you can use
 [Base64FileDestination](../../README.md#base64filedestination) to save the file as a regular Excel workbook.
 
+`ExcelBase64TableFormatter` also exposes `contentFingerprint(FormatTable)` which returns a deterministic SHA-256
+fingerprint based on workbook content. This is useful for change detection because raw Excel bytes can differ between
+writes even when the workbook content is unchanged.
+
 | Setting                   | Type                                              | Description                                                     | Default                                                                                                                                                                                      |
 |---------------------------|---------------------------------------------------|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | sheetName                 | String                                            | Name of the sheet                                               | `Sheet1`                                                                                                                                                                                     |
@@ -21,6 +25,13 @@ Because the generator will encode the binary bytes into base64 encoded String, y
 | defaultColumnWidth        | int                                               | Sets the default column width                                   | 50                                                                                                                                                                                           |
 | autofilter                | boolean                                           | Sets auto filter                                                | true                                                                                                                                                                                         |
 | columnCustomizations      | List<[ColumnCustomization](#columnCustomization)> | Configuration on which columns to autoResize and setting widths |                                                                                                                                                                                              |
+| title                     | String                                            | Title of the workbook. Saved in the workbook's properties       |                                                                                                                                                                                              |
+| category                  | String                                            | Category. Saved in the workbook's properties                    |                                                                                                                                                                                              |
+| author                    | String                                            | Author. Saved in the workbook's properties                      |                                                                                                                                                                                              |
+| company                   | String                                            | Company. Saved in the workbook's properties                     |                                                                                                                                                                                              |
+| description               | String                                            | Description. Saved in the workbook's properties                 |                                                                                                                                                                                              |
+| subject                   | String                                            | Subject. Saved in the workbook's properties                     |
+| keywords                  | String                                            | Keywords. Saved in the workbook's properties                    |                                                                                                                                                                                              |
 
 ### ExcelStyle
 

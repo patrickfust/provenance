@@ -1,5 +1,7 @@
 package dk.fust.provenance.destination.excel.format.table;
 
+import dk.fust.provenance.destination.Base64FileDestination;
+import dk.fust.provenance.destination.Destination;
 import dk.fust.provenance.destination.excel.format.table.model.ColumnCustomization;
 import dk.fust.provenance.destination.excel.format.table.model.ExcelColor;
 import dk.fust.provenance.destination.excel.format.table.model.ExcelConfiguration;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 import static dk.fust.provenance.destination.excel.format.table.model.ExcelColor.*;
 
@@ -39,17 +42,67 @@ public class ExcelBase64TableFormatter implements TableFormatter {
 
     private String sheetName = "Sheet1";
 
+    private String title;
+    private String author;
+    private String company;
+    private String category;
+    private String description;
+    private String subject;
+    private String keywords;
+
     @Override
-    public String formatTable(FormatTable formatTable) {
-        ExcelConfiguration excelConfiguration = makeExcelConfiguration();
-        try (XSSFWorkbook workbook = FormatTableToExcel.toExcel(formatTable, excelConfiguration)) {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            workbook.write(baos);
-            baos.close();
-            return Base64.getEncoder().encodeToString(baos.toByteArray());
+    public void formatTableAndSendToDestination(FormatTable formatTable, Destination destination, String destinationInDestination) throws IOException {
+        try (XSSFWorkbook workbook = FormatTableToExcel.toExcel(formatTable, makeExcelConfiguration())) {
+            String fingerprint = ExcelWorkbookFingerprint.fingerprint(workbook);
+            if (mustWriteFile(fingerprint, destination)) {
+                ExcelWorkbookFingerprint.embedInWorkbook(workbook, fingerprint);
+                String excelEncoded = Base64.getEncoder().encodeToString(workbookToBytes(workbook));
+                destination.sendDocumentToDestination(excelEncoded, destinationInDestination);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String formatTable(FormatTable formatTable) {
+        try (XSSFWorkbook workbook = FormatTableToExcel.toExcel(formatTable, makeExcelConfiguration())) {
+            String fingerprint = ExcelWorkbookFingerprint.fingerprint(workbook);
+            ExcelWorkbookFingerprint.embedInWorkbook(workbook, fingerprint);
+            return Base64.getEncoder().encodeToString(workbookToBytes(workbook));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private boolean mustWriteFile(String fingerprint, Destination destination) {
+        Optional<String> existingFingerprint = readExistingFingerprint(destination);
+        return existingFingerprint.map(f -> !f.equals(fingerprint)).orElse(true);
+    }
+
+    private Optional<String> readExistingFingerprint(Destination destination) {
+        if (destination instanceof Base64FileDestination base64FileDestination) {
+            if (base64FileDestination.getFile().exists() && base64FileDestination.getFile().isFile()) {
+                return ExcelWorkbookFingerprint.readFromFile(base64FileDestination.getFile());
+            }
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Creates a deterministic content fingerprint for change detection.
+     */
+    public String contentFingerprint(FormatTable formatTable) {
+        try (XSSFWorkbook workbook = FormatTableToExcel.toExcel(formatTable, makeExcelConfiguration())) {
+            return ExcelWorkbookFingerprint.fingerprint(workbook);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private byte[] workbookToBytes(XSSFWorkbook workbook) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        workbook.write(baos);
+        return baos.toByteArray();
     }
 
     private ExcelConfiguration makeExcelConfiguration() {
@@ -59,6 +112,14 @@ public class ExcelBase64TableFormatter implements TableFormatter {
         excelConfiguration.setAutofilter(autofilter);
         excelConfiguration.setColumnCustomizations(columnCustomizations);
         excelConfiguration.setSheetName(sheetName);
+        excelConfiguration.setTitle(title);
+        excelConfiguration.setAuthor(author);
+        excelConfiguration.setCompany(company);
+        excelConfiguration.setCategory(category);
+        excelConfiguration.setDescription(description);
+        excelConfiguration.setSubject(subject);
+        excelConfiguration.setKeywords(keywords);
+
         excelConfiguration.validate();
         return excelConfiguration;
     }

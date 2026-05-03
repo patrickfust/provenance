@@ -1,4 +1,4 @@
-package dk.fust.provenance.destination.excel
+package dk.fust.provenance.extension.excel
 
 import dk.fust.provenance.ProvenanceGenerator
 import dk.fust.provenance.GeneratorConfiguration
@@ -7,6 +7,7 @@ import dk.fust.provenance.TestHelper
 import dk.fust.provenance.generator.datadict.DataDictionaryConfiguration
 import dk.fust.provenance.destination.Base64FileDestination
 import dk.fust.provenance.destination.excel.format.table.ExcelBase64TableFormatter
+import dk.fust.provenance.destination.excel.format.table.ExcelWorkbookFingerprint
 import dk.fust.provenance.format.table.FormatTable
 import dk.fust.provenance.service.ProvenanceConfigurationLoaderService
 import org.apache.poi.ss.usermodel.IndexedColors
@@ -90,6 +91,90 @@ class ExcelBase64TableFormatterSpec extends Specification {
 
         then:
         noExceptionThrown()
+    }
+
+    def "content fingerprint is stable across repeated formatting"() {
+        given:
+        ExcelBase64TableFormatter formatter = new ExcelBase64TableFormatter()
+        FormatTable table = TestData.generateTable()
+
+        when:
+        String fingerprint1 = formatter.contentFingerprint(table)
+        String fingerprint2 = formatter.contentFingerprint(table)
+
+        then:
+        fingerprint1 == fingerprint2
+    }
+
+    def "content fingerprint changes when table content changes"() {
+        given:
+        ExcelBase64TableFormatter formatter = new ExcelBase64TableFormatter()
+        FormatTable table = TestData.generateTable()
+
+        String originalFingerprint = formatter.contentFingerprint(table)
+
+        when:
+        table.rows[2].cells[0].content = "table_a_updated"
+        String updatedFingerprint = formatter.contentFingerprint(table)
+
+        then:
+        originalFingerprint != updatedFingerprint
+    }
+
+    def "content fingerprint changes when style changes"() {
+        given:
+        ExcelBase64TableFormatter formatter = new ExcelBase64TableFormatter()
+        FormatTable table = TestData.generateTable()
+
+        String originalFingerprint = formatter.contentFingerprint(table)
+
+        when: 'header style font size is changed'
+        formatter.headerExcelStyle.fontHeightInPoints = 14
+        String changedStyleFingerprint = formatter.contentFingerprint(table)
+
+        then:
+        originalFingerprint != changedStyleFingerprint
+    }
+
+    def "content fingerprint changes when workbook metadata changes"() {
+        given:
+        ExcelBase64TableFormatter formatter = new ExcelBase64TableFormatter()
+        FormatTable table = TestData.generateTable()
+
+        String originalFingerprint = formatter.contentFingerprint(table)
+
+        when: 'title is set'
+        formatter.title = "My Report"
+        String changedMetadataFingerprint = formatter.contentFingerprint(table)
+
+        then:
+        originalFingerprint != changedMetadataFingerprint
+
+        when: 'author is set instead'
+        formatter.title = null
+        formatter.author = "John Doe"
+        String authorChangedFingerprint = formatter.contentFingerprint(table)
+
+        then:
+        originalFingerprint != authorChangedFingerprint
+        changedMetadataFingerprint != authorChangedFingerprint
+    }
+
+    def "fingerprint is embedded in file and can be read back"() {
+        given:
+        ExcelBase64TableFormatter formatter = new ExcelBase64TableFormatter()
+        FormatTable table = TestData.generateTable()
+        File outputFile = new File('target/excel-fingerprinted.xlsx')
+
+        when:
+        String expectedFingerprint = formatter.contentFingerprint(table)
+        String base64 = formatter.formatTable(table)
+        new Base64FileDestination(file: outputFile).sendDocumentToDestination(base64, null)
+        Optional<String> embeddedFingerprint = ExcelWorkbookFingerprint.readFromFile(outputFile)
+
+        then:
+        embeddedFingerprint.isPresent()
+        embeddedFingerprint.get() == expectedFingerprint
     }
 
 }
