@@ -31,7 +31,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <groovy.version>4.0.31</groovy.version>
+        <groovy.version>5.0.5</groovy.version>
         <jackson.version>2.21.3</jackson.version>
         <lombok.version>1.18.46</lombok.version>
         <junit.version>4.13.2</junit.version>
