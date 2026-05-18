@@ -22,7 +22,7 @@ Default table formatter for most generators.
 
 Generates the table in a format that can be used i Markdown files.
 
-Use it together with [MarkdownDestination](#markdowndestination).
+Use it together with [MarkdownDestination](destinations.md#markdowndestination).
 
 ## HTMLTableFormatter
 

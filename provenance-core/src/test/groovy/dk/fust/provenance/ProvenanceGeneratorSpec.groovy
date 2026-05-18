@@ -21,10 +21,10 @@ class ProvenanceGeneratorSpec extends Specification {
                 return new MockDestination()
             }
         }
-        ProvenanceGenerator documentationGenerator = new ProvenanceGenerator()
+        ProvenanceGenerator provenanceGenerator = new ProvenanceGenerator()
 
         when:
-        documentationGenerator.generate(documentationConfiguration)
+        provenanceGenerator.generate(documentationConfiguration)
 
         then:
         noExceptionThrown()

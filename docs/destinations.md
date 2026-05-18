@@ -30,7 +30,7 @@ Replace an entire file with the document.
 Class name: `dk.fust.provenance.destination.Base64FileDestination`
 
 Base64 decodes the document and replaces the entire file with binary content.
-Can for instance be used in conjunction with [ExcelBase64TableFormatter](#excelbase64tableformatter).
+Can for instance be used in conjunction with [ExcelBase64TableFormatter](table-formats.md#excelbase64tableformatter).
 
 
 | Setting | Type | Description                             | Default |
