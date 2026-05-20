@@ -1,14 +1,12 @@
-package dk.fust.provenance.extension.excel
+package dk.fust.provenance.destination.excel.format.table
 
-import dk.fust.provenance.ProvenanceGenerator
 import dk.fust.provenance.GeneratorConfiguration
+import dk.fust.provenance.ProvenanceGenerator
 import dk.fust.provenance.TestData
 import dk.fust.provenance.TestHelper
-import dk.fust.provenance.generator.datadict.DataDictionaryConfiguration
 import dk.fust.provenance.destination.Base64FileDestination
-import dk.fust.provenance.destination.excel.format.table.ExcelBase64TableFormatter
-import dk.fust.provenance.destination.excel.format.table.ExcelWorkbookFingerprint
 import dk.fust.provenance.format.table.FormatTable
+import dk.fust.provenance.generator.datadict.DataDictionaryConfiguration
 import dk.fust.provenance.service.ProvenanceConfigurationLoaderService
 import org.apache.poi.ss.usermodel.IndexedColors
 import spock.lang.Specification

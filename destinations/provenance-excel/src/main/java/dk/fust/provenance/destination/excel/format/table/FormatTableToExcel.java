@@ -60,7 +60,13 @@ public class FormatTableToExcel {
         if (excelConfiguration.isAutofilter()) {
             setAutoFilter(sheet, maxCol, rowIdx);
         }
+        addFingerprint(workbook);
         return workbook;
+    }
+
+    private static void addFingerprint(XSSFWorkbook workbook) {
+        String fingerprint = ExcelWorkbookFingerprint.fingerprint(workbook);
+        ExcelWorkbookFingerprint.embedInWorkbook(workbook, fingerprint);
     }
 
     private static void setWorkbookProperties(XSSFWorkbook workbook, ExcelConfiguration excelConfiguration) {

@@ -2,11 +2,7 @@ package dk.fust.provenance.destination.excel.format.table;
 
 import dk.fust.provenance.destination.Base64FileDestination;
 import dk.fust.provenance.destination.Destination;
-import dk.fust.provenance.destination.excel.format.table.model.ColumnCustomization;
-import dk.fust.provenance.destination.excel.format.table.model.ExcelColor;
-import dk.fust.provenance.destination.excel.format.table.model.ExcelConfiguration;
-import dk.fust.provenance.destination.excel.format.table.model.ExcelStyle;
-import dk.fust.provenance.destination.excel.format.table.model.ExcelStyles;
+import dk.fust.provenance.destination.excel.format.table.model.*;
 import dk.fust.provenance.format.table.FormatTable;
 import dk.fust.provenance.format.table.TableFormatter;
 import dk.fust.provenance.util.Assert;
@@ -55,23 +51,26 @@ public class ExcelBase64TableFormatter implements TableFormatter {
         try (XSSFWorkbook workbook = FormatTableToExcel.toExcel(formatTable, makeExcelConfiguration())) {
             String fingerprint = ExcelWorkbookFingerprint.fingerprint(workbook);
             if (mustWriteFile(fingerprint, destination)) {
-                ExcelWorkbookFingerprint.embedInWorkbook(workbook, fingerprint);
                 String excelEncoded = Base64.getEncoder().encodeToString(workbookToBytes(workbook));
                 destination.sendDocumentToDestination(excelEncoded, destinationInDestination);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
     public String formatTable(FormatTable formatTable) {
         try (XSSFWorkbook workbook = FormatTableToExcel.toExcel(formatTable, makeExcelConfiguration())) {
-            String fingerprint = ExcelWorkbookFingerprint.fingerprint(workbook);
-            ExcelWorkbookFingerprint.embedInWorkbook(workbook, fingerprint);
             return Base64.getEncoder().encodeToString(workbookToBytes(workbook));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Creates a deterministic content fingerprint for change detection.
+     */
+    protected String contentFingerprint(FormatTable formatTable) {
+        XSSFWorkbook workbook = FormatTableToExcel.toExcel(formatTable, makeExcelConfiguration());
+        return ExcelWorkbookFingerprint.fingerprint(workbook);
     }
 
     private boolean mustWriteFile(String fingerprint, Destination destination) {
@@ -86,17 +85,6 @@ public class ExcelBase64TableFormatter implements TableFormatter {
             }
         }
         return Optional.empty();
-    }
-
-    /**
-     * Creates a deterministic content fingerprint for change detection.
-     */
-    public String contentFingerprint(FormatTable formatTable) {
-        try (XSSFWorkbook workbook = FormatTableToExcel.toExcel(formatTable, makeExcelConfiguration())) {
-            return ExcelWorkbookFingerprint.fingerprint(workbook);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private byte[] workbookToBytes(XSSFWorkbook workbook) throws IOException {
