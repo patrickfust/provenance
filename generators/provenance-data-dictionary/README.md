@@ -1,4 +1,4 @@
-# Documentation Generator Data Dictionary
+# Provenance Data Dictionary
 
 This generator can generate [data dictionaries](https://atlan.com/what-is-a-data-dictionary/).
 
@@ -48,7 +48,7 @@ Possible values for alignment are `LEFT`, `RIGHT` and `CENTER`.
 
 ## Model usage
 
-This generator uses these fields in [Documentation](../../provenance-generator-api/src/main/java/dk/fust/docgen/model/Documentation.java)
+This generator uses these fields in [DataDictionary](../../provenance-api/src/main/java/dk/fust/provenance/model/datadict/DataDictionary.java)
 
 ```
 Documentation
@@ -122,7 +122,7 @@ To use the data dictionary meta info generator, you must configure it with `dk.f
 
 ## Model usage
 
-This generator uses these fields in [Documentation](../../provenance-generator-api/src/main/java/dk/fust/docgen/model/Documentation.java)
+This generator uses these fields in [DataDictionary](../../provenance-api/src/main/java/dk/fust/provenance/model/datadict/DataDictionary.java)
 
 ```
 Documentation

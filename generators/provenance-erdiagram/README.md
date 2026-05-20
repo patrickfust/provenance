@@ -26,11 +26,11 @@ The `destinationKey` tells which part of the destination that needs replacing.
 For instance if you're using `MarkdownDestination`, you can point to the same markdown-file but with different `destinationKey`, 
 so you can have several ER-diagram with a sub-set of the tables.
 
-Read more about `MarkdownDestination` [here](../../README.md#dkfustdocgendestinationmarkdowndestination-)
+Read more about `MarkdownDestination` [here](../../docs/destinations.md#markdowndestination)
 
 ## Model usage
 
-This generator uses these fields in [Provenance](../../provenance-generator-api/src/main/java/dk/fust/docgen/model/Provenance.java)
+This generator uses these fields in [Provenance](../../provenance-api/src/main/java/dk/fust/provenance/model/Provenance.java)
 
 ```
 Provenance

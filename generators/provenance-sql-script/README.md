@@ -15,7 +15,7 @@ To use the sql generator, you must configure it with `dk.fust.provenance.generat
 
 ## Model usage
 
-This generator uses these fields in [Provenance](../../provenance-generator-api/src/main/java/dk/fust/docgen/model/Provenance.java)
+This generator uses these fields in [Provenance](../../provenance-api/src/main/java/dk/fust/provenance/model/Provenance.java)
 
 ```
 Provenance

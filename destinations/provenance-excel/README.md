@@ -9,7 +9,7 @@ Class name: `dk.fust.provenance.destination.excel.format.table.ExcelBase64TableF
 Converts a FormatTable into an Excel workbook.
 
 Because the generator will encode the binary bytes into base64 encoded String, you can use
-[Base64FileDestination](../../README.md#base64filedestination) to save the file as a regular Excel workbook.
+[Base64FileDestination](../../docs/destinations.md#base64filedestination) to save the file as a regular Excel workbook.
 
 | Setting                   | Type                                              | Description                                                     | Default                                                                                                                                                                                      |
 |---------------------------|---------------------------------------------------|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
