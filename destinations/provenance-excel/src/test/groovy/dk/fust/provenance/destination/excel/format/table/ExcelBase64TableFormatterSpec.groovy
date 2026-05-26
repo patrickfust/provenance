@@ -5,6 +5,7 @@ import dk.fust.provenance.ProvenanceGenerator
 import dk.fust.provenance.TestData
 import dk.fust.provenance.TestHelper
 import dk.fust.provenance.destination.Base64FileDestination
+import dk.fust.provenance.destination.MockDestination
 import dk.fust.provenance.format.table.FormatTable
 import dk.fust.provenance.generator.datadict.DataDictionaryConfiguration
 import dk.fust.provenance.service.ProvenanceConfigurationLoaderService
@@ -173,6 +174,19 @@ class ExcelBase64TableFormatterSpec extends Specification {
         then:
         embeddedFingerprint.isPresent()
         embeddedFingerprint.get() == expectedFingerprint
+    }
+
+    def "generate and send to destination"() {
+        given:
+        ExcelBase64TableFormatter formatter = new ExcelBase64TableFormatter()
+        FormatTable table = TestData.generateTable()
+        MockDestination mockDestination = new MockDestination()
+
+        when:
+        formatter.formatTableAndSendToDestination(table, mockDestination, null)
+
+        then:
+        Base64.getDecoder().decode(mockDestination.getDocument())
     }
 
 }

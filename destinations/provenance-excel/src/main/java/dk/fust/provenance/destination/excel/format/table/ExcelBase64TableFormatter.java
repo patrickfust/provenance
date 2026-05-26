@@ -57,6 +57,7 @@ public class ExcelBase64TableFormatter implements TableFormatter {
         }
     }
 
+    @Override
     public String formatTable(FormatTable formatTable) {
         try (XSSFWorkbook workbook = FormatTableToExcel.toExcel(formatTable, makeExcelConfiguration())) {
             return Base64.getEncoder().encodeToString(workbookToBytes(workbook));
