@@ -47,7 +47,7 @@ provenanceGenerator {
 ### Configuration in separate file
 
 Another option is to have your configuration in a separate file.
-[See here the description of the configuration file](../README.md#generator-configuration-file)
+[See here the description of the configuration file](../../README.md#generator-configuration-file)
 
 The list of configurations consists of the desired configurations.
 

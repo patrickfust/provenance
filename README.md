@@ -8,7 +8,7 @@ Provenance lets you define your data model in YAML or JSON and generate ER diagr
 
 This document covers:
 - [Idea of Provenance](#idea-of-provenance)
-- [Documentation structure](#provenance-structure)
+- [Documentation structure](#documentation-structure)
 - [Usage](#usage)
 
 ## Badges
@@ -219,3 +219,13 @@ Read about how to use *Provenance*:
 | [Build tools - Gradle](build-tools/provenance-gradle-plugin) | How to use *Provenance* with Gradle.                  |
 | [Build tools - Maven](build-tools/provenance-maven-plugin)   | How to use *Provenance* with Maven.                   |
 | [Demos](https://github.com/patrickfust/provenance-demos/)    | Examples of how to use *Provenance*.                  |
+
+---
+
+## Validate markdown links
+
+Run the markdown link checker locally:
+
+```shell
+python3 scripts/check_markdown_links.py --root .
+```
