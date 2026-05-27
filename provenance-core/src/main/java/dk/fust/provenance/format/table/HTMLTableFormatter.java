@@ -1,8 +1,10 @@
 package dk.fust.provenance.format.table;
 
+import dk.fust.provenance.destination.Destination;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +17,11 @@ public class HTMLTableFormatter implements TableFormatter {
 
     private Map<String, String> dataFields;
     private List<String> columnWidths;
+
+    @Override
+    public void formatTableAndSendToDestination(FormatTable formatTable, Destination destination, String destinationInDestination) throws IOException {
+        destination.sendDocumentToDestination(formatTable(formatTable), destinationInDestination);
+    }
 
     @Override
     public String formatTable(FormatTable formatTable) {

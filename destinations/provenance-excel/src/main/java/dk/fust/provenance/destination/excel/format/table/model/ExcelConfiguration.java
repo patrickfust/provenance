@@ -23,6 +23,14 @@ public class ExcelConfiguration {
 
     private String sheetName;
 
+    private String title;
+    private String author;
+    private String company;
+    private String category;
+    private String description;
+    private String subject;
+    private String keywords;
+
     private List<ColumnCustomization> columnCustomizations = new ArrayList<>();
 
     /**

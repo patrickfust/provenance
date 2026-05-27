@@ -46,8 +46,7 @@ public class DataLineageGenerator implements Generator {
         rows.add(getSubHeaderRow());
         rows.addAll(getRows(provenance.filterTables(conf.getFilterTags()), provenance, conf));
 
-        String document = conf.getTableFormatter().formatTable(formatTable);
-        generatorConfiguration.getDestination().sendDocumentToDestination(document, conf.getKey());
+        conf.getTableFormatter().formatTableAndSendToDestination(formatTable, generatorConfiguration.getDestination(), conf.getKey());
     }
 
     private List<Row> getRows(List<Table> tables, Provenance provenance, DataLineageConfiguration configuration) throws IOException {

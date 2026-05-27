@@ -31,8 +31,8 @@ public abstract class AbstractDataDictionaryGenerator implements Generator {
     }
 
     private void sendTableToDestination(FormatTable formatTable, AbstractDataDictionaryConfiguration configuration) throws IOException {
-        String table = configuration.getTableFormatter().formatTable(formatTable);
-        configuration.getDestination().sendDocumentToDestination(table, configuration.getKey());
+        configuration.getTableFormatter().formatTableAndSendToDestination(
+                formatTable, configuration.getDestination(), configuration.getKey());
     }
 
 }

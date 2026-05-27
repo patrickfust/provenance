@@ -1,5 +1,6 @@
 package dk.fust.provenance.destination.csv.format.table;
 
+import dk.fust.provenance.destination.Destination;
 import dk.fust.provenance.format.table.Cell;
 import dk.fust.provenance.format.table.FormatTable;
 import dk.fust.provenance.format.table.Row;
@@ -20,6 +21,11 @@ public class CSVTableFormatter implements TableFormatter {
 
     private CSVDelimiter delimiter = CSVDelimiter.SEMICOLON;
     private CSVRecordSeparator recordSeparator = CSVRecordSeparator.NEWLINE;
+
+    @Override
+    public void formatTableAndSendToDestination(FormatTable formatTable, Destination destination, String destinationInDestination) throws IOException {
+        destination.sendDocumentToDestination(formatTable(formatTable), destinationInDestination);
+    }
 
     @Override
     public String formatTable(FormatTable formatTable) {

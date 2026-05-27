@@ -1,7 +1,9 @@
 package dk.fust.provenance.format.table;
 
+import dk.fust.provenance.destination.Destination;
 import dk.fust.provenance.util.Assert;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,11 @@ import java.util.List;
  * Converts from model of a Table to the way Markdown writes tables
  */
 public class MarkdownTableFormatter implements TableFormatter {
+
+    @Override
+    public void formatTableAndSendToDestination(FormatTable formatTable, Destination destination, String destinationInDestination) throws IOException {
+        destination.sendDocumentToDestination(formatTable(formatTable), destinationInDestination);
+    }
 
     /**
      * Convert to Markdown

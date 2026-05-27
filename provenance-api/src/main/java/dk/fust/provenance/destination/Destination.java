@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * This interface describes a way to send the generated
  * artifact to the destination.
- * It could be a file, markdown, confluence or something completely different.
+ * It could be a file, Markdown, Confluence or something completely different.
  */
 public interface Destination {
 

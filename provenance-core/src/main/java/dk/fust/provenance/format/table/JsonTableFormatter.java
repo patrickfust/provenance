@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
+import dk.fust.provenance.destination.Destination;
 import lombok.Data;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +30,11 @@ public class JsonTableFormatter implements TableFormatter {
      * Should the json be pretty printet or compressed
      */
     private boolean prettyPrint = true;
+
+    @Override
+    public void formatTableAndSendToDestination(FormatTable formatTable, Destination destination, String destinationInDestination) throws IOException {
+        destination.sendDocumentToDestination(formatTable(formatTable), destinationInDestination);
+    }
 
     @Override
     public String formatTable(FormatTable formatTable) {
