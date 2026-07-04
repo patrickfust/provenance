@@ -36,7 +36,7 @@
                     <dependency>
                         <groupId>org.apache.groovy</groupId>
                         <artifactId>groovy-groovydoc</artifactId>
-                        <version>5.0.6</version>
+                        <version>5.0.7</version>
                     </dependency>
                 </dependencies>
                 <executions>
