@@ -37,7 +37,7 @@
         <junit.version>4.13.2</junit.version>
         <spock.version>2.4-M6-groovy-4.0</spock.version>
         <jsonschema.generator.version>5.0.0</jsonschema.generator.version>
-        <slf4j.version>2.0.18</slf4j.version>
+        <slf4j.version>2.0.19</slf4j.version>
         <maven.version>3.9.16</maven.version>
     </properties>
 
