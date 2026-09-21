@@ -5,7 +5,9 @@ import dk.fust.provenance.model.datadict.Column;
 import dk.fust.provenance.model.datadict.DataDictionaryFile;
 import dk.fust.provenance.util.Assert;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,14 +16,20 @@ import java.util.Set;
 public class ModelValidator {
 
     private final Provenance provenance;
+    private final List<Provenance> allProvenanceFiles;
 
     /**
      * Constructor with the documentation to validate
      *
      * @param provenance documentation to validate
      */
-    public ModelValidator(Provenance provenance) {
+    public ModelValidator(Provenance provenance, List<Provenance> externalProvenanceFiles) {
         this.provenance = provenance;
+        this.allProvenanceFiles = new ArrayList<>();
+        this.allProvenanceFiles.add(provenance);
+        if (externalProvenanceFiles != null) {
+            this.allProvenanceFiles.addAll(externalProvenanceFiles);
+        }
     }
 
     /**
@@ -98,11 +106,25 @@ public class ModelValidator {
         Assert.isNotNull(foreignColumnName, callerFieldWithTable + " has foreign key without column name");
 
         Field field = provenance.getField(table.getName(), callerField, generationForTable.getGenerateIdDataType());
-        Field foreignTablesField = provenance.getField(foreignTableName, foreignColumnName, generationForTable.getGenerateIdDataType());
+        Field foreignTablesField = getFieldFromAllProvenanceFiles(foreignTableName, foreignColumnName);
         String foreignTableNameColumnName = foreignTableName + "." + foreignColumnName;
         Assert.isNotNull(foreignTablesField, foreignTableNameColumnName + " does not exist. Is foreign key in " + callerFieldWithTable);
         Assert.isEquals(field.getDataType(), foreignTablesField.getDataType(), "%s has different data types (%s) compared to %s (%s)"
                 .formatted(foreignTableNameColumnName, foreignTablesField.getDataType(), callerFieldWithTable, field.getDataType()));
+    }
+
+    private Field getFieldFromAllProvenanceFiles(String tableName, String columnName) {
+        for (Provenance provenance : allProvenanceFiles) {
+            Table table = provenance.getTable(tableName);
+            if (table != null) {
+                Generation generationForTable = provenance.getGenerationForTable(table);
+                Field field = provenance.getField(tableName, columnName, generationForTable.getGenerateIdDataType());
+                if (field != null) {
+                    return field;
+                }
+            }
+        }
+        return null;
     }
 
     private void validateIndexes(Table table) {

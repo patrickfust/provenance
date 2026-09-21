@@ -2,11 +2,13 @@ package dk.fust.provenance.generator.datadict;
 
 import dk.fust.provenance.Generator;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Configuration for generating meta information for data dictionaries
  */
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class DataDictionaryMetaInfoConfiguration extends AbstractDataDictionaryConfiguration {
 
     @Override

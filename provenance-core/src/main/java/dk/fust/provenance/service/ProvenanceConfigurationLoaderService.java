@@ -89,7 +89,7 @@ public class ProvenanceConfigurationLoaderService {
                 // Must merge with existing default
                 Method getMethod = findMethod(fieldName, clazz, null, "get");
                 Object defaultObject = getMethod.invoke(instance);
-                setMethod.invoke(instance, mergeWithDefault(clazz, defaultObject, convertedObject, dataType));
+                setMethod.invoke(instance, mergeWithDefault(defaultObject, convertedObject, dataType));
             } else {
                 setMethod.invoke(instance, convertedObject);
             }
@@ -132,7 +132,7 @@ public class ProvenanceConfigurationLoaderService {
         throw new NoSuchMethodException("Can't find method for field: " + fieldName + " with prefixes: " + methodPrefixes);
     }
 
-    private Object mergeWithDefault(Class<?> clazz, Object defaultObject, Object convertedObject, Class<?> dataType) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    private Object mergeWithDefault(Object defaultObject, Object convertedObject, Class<?> dataType) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         if (dataType.getPackageName().equals("java.lang")) {
             return convertedObject != null ? convertedObject : defaultObject;
         } else {

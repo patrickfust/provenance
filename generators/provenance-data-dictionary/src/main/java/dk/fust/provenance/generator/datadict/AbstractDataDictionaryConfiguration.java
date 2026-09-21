@@ -1,11 +1,13 @@
 package dk.fust.provenance.generator.datadict;
 
+import dk.fust.provenance.AbstractGeneratorConfiguration;
 import dk.fust.provenance.GeneratorConfiguration;
 import dk.fust.provenance.destination.Destination;
 import dk.fust.provenance.format.table.MarkdownTableFormatter;
 import dk.fust.provenance.format.table.TableFormatter;
 import dk.fust.provenance.util.Assert;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.File;
 
@@ -13,11 +15,8 @@ import java.io.File;
  * Common information for data dictionaries
  */
 @Data
-public abstract class AbstractDataDictionaryConfiguration implements GeneratorConfiguration {
-
-    private File provenanceFile;
-
-    private Destination destination;
+@EqualsAndHashCode(callSuper = true)
+public abstract class AbstractDataDictionaryConfiguration extends AbstractGeneratorConfiguration {
 
     private String key;
 
@@ -27,9 +26,9 @@ public abstract class AbstractDataDictionaryConfiguration implements GeneratorCo
 
     @Override
     public void validate() {
-        Assert.isNotNull(destination, "Destination is required");
-        Assert.isNotNull(provenanceFile, "provenanceFile is required");
-        Assert.isNotNull(tableFormatter, "TableFormatter is required");
+        Assert.isNotNull(getDestination(), "destination is required");
+        Assert.isNotNull(getProvenanceFile(), "provenanceFile is required");
+        Assert.isNotNull(tableFormatter, "tableFormatter is required");
     }
 
 }

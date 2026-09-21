@@ -5,6 +5,7 @@ import dk.fust.provenance.format.table.Alignment;
 import dk.fust.provenance.model.annotation.MergeWithDefault;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class DataDictionaryConfiguration extends AbstractDataDictionaryConfiguration {
 
     private boolean addDescriptionForFile = false;

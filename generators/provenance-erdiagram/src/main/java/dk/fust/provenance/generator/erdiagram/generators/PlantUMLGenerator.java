@@ -38,7 +38,7 @@ public class PlantUMLGenerator implements ERGenerator {
     }
 
     @Override
-    public String generateUML(String filterTags, Provenance provenance, GeneratorConfiguration generatorConfiguration) {
+    public String generateUML(String filterTags, Provenance provenance, List<Provenance> externalProvenanceFiles, GeneratorConfiguration generatorConfiguration) {
         StringBuilder stringBuilder = new StringBuilder(1024);
         List<Table> tables = provenance.filterTables(filterTags);
         stringBuilder.append("""

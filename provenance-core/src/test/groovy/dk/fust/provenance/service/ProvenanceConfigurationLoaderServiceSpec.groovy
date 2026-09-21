@@ -35,6 +35,19 @@ class ProvenanceConfigurationLoaderServiceSpec extends Specification {
         mockGeneratorConfiguration.mockEnum == MockEnum.B
     }
 
+    def "read documentation configuration with external files"() {
+        given:
+        ProvenanceConfigurationLoaderService service = new ProvenanceConfigurationLoaderService()
+        File file = TestHelper.getTestFile('generator-configuration-with-external-files.yml')
+
+        when:
+        List<GeneratorConfiguration> conf = service.readConfigurations(file)
+
+        then:
+        conf.size() == 1
+        conf.first().externalProvenanceFiles.size() == 1
+    }
+
     def "read bad documentation configuration where field don't exist"() {
         given:
         ProvenanceConfigurationLoaderService service = new ProvenanceConfigurationLoaderService()

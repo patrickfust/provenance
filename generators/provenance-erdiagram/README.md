@@ -6,12 +6,13 @@ This generator can generate entity-relation diagrams in the format of [PlantUML]
 
 To use the entity-relation diagram generator, you must configure it with `dk.fust.provenance.generator.erdiagram.ERDiagramConfiguration`
 
-| Setting           | 	Type             | Description                                                        | 	Default |
-|-------------------|-------------------|--------------------------------------------------------------------|----------|
-| provenanceFile | File              | Location of the provenance file                                 |          |
-| destination       | Destination       | Where to send the generated provenance                          |          | 
-| umlGenerator      | UMLGenerator      | Which type of ER-diagram to generate. Can be MERMAID and PLANTUML  | MERMAID  |
-| generateKeys      | List<GenerateKey> | List of model-tags and the placeholder to replace in provenance |          | 
+| Setting                 | 	Type              | Description                                                       | 	Default |
+|-------------------------|-------------------|-------------------------------------------------------------------|---------|
+| provenanceFile          | File              | Location of the provenance file                                   |         |
+| externalProvenanceFiles | List<File>        | Location of external provenance files necessary in the ER-diagram |         |
+| destination             | Destination       | Where to send the generated provenance                            |         | 
+| umlGenerator            | UMLGenerator      | Which type of ER-diagram to generate. Can be MERMAID and PLANTUML | MERMAID |
+| generateKeys            | List<GenerateKey> | List of model-tags and the placeholder to replace in provenance   |         | 
 
 ### GenerateKey
 

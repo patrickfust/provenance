@@ -1,0 +1,17 @@
+$schema: ../../../../provenance-api/src/main/resources/provenance-schema.json
+schemaName: needs_external
+tables:
+  - name: needs_table
+    fields:
+      - name: name
+        dataType: text
+        foreignKey:
+            tableName: external_table
+            columnName: name
+  - name: needs_table_with_generated_id
+    fields:
+      - name: some_id
+        dataType: int
+        foreignKey:
+            tableName: external_table_with_generated_id
+            columnName: external_table_with_generated_id_id
