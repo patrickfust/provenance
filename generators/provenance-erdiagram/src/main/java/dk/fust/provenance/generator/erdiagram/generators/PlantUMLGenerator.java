@@ -1,9 +1,9 @@
 package dk.fust.provenance.generator.erdiagram.generators;
 
 import dk.fust.provenance.GeneratorConfiguration;
-import dk.fust.provenance.model.Provenance;
 import dk.fust.provenance.model.Field;
 import dk.fust.provenance.model.Generation;
+import dk.fust.provenance.model.Provenance;
 import dk.fust.provenance.model.Table;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class PlantUMLGenerator implements ERGenerator {
     }
 
     @Override
-    public String generateUML(String filterTags, Provenance provenance, GeneratorConfiguration generatorConfiguration) {
+    public String generateUML(String filterTags, Provenance provenance, List<Provenance> externalProvenanceFiles, GeneratorConfiguration generatorConfiguration) {
         StringBuilder stringBuilder = new StringBuilder(1024);
         List<Table> tables = provenance.filterTables(filterTags);
         stringBuilder.append("""

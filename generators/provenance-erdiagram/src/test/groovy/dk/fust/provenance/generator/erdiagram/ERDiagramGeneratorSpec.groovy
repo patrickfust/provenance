@@ -1,7 +1,11 @@
 package dk.fust.provenance.generator.erdiagram
 
+import dk.fust.provenance.GeneratorConfiguration
 import dk.fust.provenance.TestHelper
 import dk.fust.provenance.destination.MarkdownDestination
+import dk.fust.provenance.model.Provenance
+import dk.fust.provenance.service.ProvenanceConfigurationLoaderService
+import dk.fust.provenance.service.ProvenanceService
 import spock.lang.Specification
 
 class ERDiagramGeneratorSpec extends Specification {
@@ -38,4 +42,15 @@ Trailing stuff
         !markdownText.contains('SOMETHING TO BE REPLACED')
     }
 
+    def "load configuration file with external files"() {
+        given:
+        File file = TestHelper.getTestFile('provenance-configuration-with-external-files.yml')
+        ProvenanceConfigurationLoaderService provenanceConfigurationLoaderService = new ProvenanceConfigurationLoaderService()
+
+        when:
+        List<GeneratorConfiguration> configurations = provenanceConfigurationLoaderService.readConfigurations(file)
+
+        then:
+        configurations.size() == 1
+    }
 }

@@ -1,14 +1,16 @@
 package dk.fust.provenance.generator.erdiagram;
 
-import dk.fust.provenance.GeneratorConfiguration;
 import dk.fust.provenance.Generator;
+import dk.fust.provenance.GeneratorConfiguration;
 import dk.fust.provenance.generator.erdiagram.generators.ERGenerator;
 import dk.fust.provenance.generator.erdiagram.generators.ERGeneratorFactory;
 import dk.fust.provenance.model.Provenance;
+import dk.fust.provenance.service.ProvenanceService;
 import dk.fust.provenance.util.Assert;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Generator for entity-relation diagrams
@@ -22,9 +24,10 @@ public class ERDiagramGenerator implements Generator {
         log.debug("Generating ERDiagram...");
         Assert.isNotNull(erDiagramConfiguration.getDestination(), "destination must not be null");
         erDiagramConfiguration.getDestination().validate();
+        List<Provenance> externalProvenanceFiles = new ProvenanceService().loadExternalProvenanceFiles(erDiagramConfiguration);
         ERGenerator generator = ERGeneratorFactory.getGenerator(erDiagramConfiguration.getUmlGenerator());
         for (GenerateKey generateKey : erDiagramConfiguration.getGenerateKeys()) {
-            String uml = generator.generateUML(generateKey.getFilterTags(), provenance, generatorConfiguration);
+            String uml = generator.generateUML(generateKey.getFilterTags(), provenance, externalProvenanceFiles, erDiagramConfiguration);
             String document = """
 ```%s
 %s
@@ -32,6 +35,6 @@ public class ERDiagramGenerator implements Generator {
 """.formatted(generator.getMarkdownType(), uml);
             erDiagramConfiguration.getDestination().sendDocumentToDestination(document, generateKey.getDestinationKey());
         }
-
     }
+
 }

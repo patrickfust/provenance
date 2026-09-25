@@ -5,6 +5,7 @@ import dk.fust.provenance.model.Provenance;
 import dk.fust.provenance.model.Field;
 import dk.fust.provenance.model.Generation;
 import dk.fust.provenance.model.Table;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -12,6 +13,7 @@ import java.util.stream.Stream;
 /**
  * Generates ER-diagram in mermaid format
  */
+@Slf4j
 public class MermaidGenerator implements ERGenerator {
 
     private static final int INITIAL_CAPACITY = 512;
@@ -22,7 +24,8 @@ public class MermaidGenerator implements ERGenerator {
     }
 
     @Override
-    public String generateUML(String filterTags, Provenance provenance, GeneratorConfiguration generatorConfiguration) {
+    public String generateUML(String filterTags, Provenance provenance, List<Provenance> externalProvenanceFiles, GeneratorConfiguration generatorConfiguration) {
+        log.debug("Generating Mermaid UML for filterTags: {} and with externalProvenanceFiles: {}", filterTags, externalProvenanceFiles);
         StringBuilder uml = new StringBuilder(INITIAL_CAPACITY);
         if (provenance.getProvenanceTitle() != null && !provenance.getProvenanceTitle().isEmpty()) {
             uml.append("""
@@ -32,6 +35,7 @@ title: %s
 """.formatted(provenance.getProvenanceTitle()));
         }
         uml.append("erDiagram\n");
+        uml.append("    classDef externalRef stroke-dasharray: 1 1;\n");
         String tables = generateTables(filterTags, provenance);
         uml.append(tables);
         return uml.toString();
@@ -42,7 +46,7 @@ title: %s
 
         List<Table> tables = provenance.filterTables(filterTags);
         tables.forEach(table -> {
-            uml.append(generateTableForeignKeys(table));
+            uml.append(generateTableForeignKeys(table, provenance));
 
             uml.append("%s {\n".formatted(table.getName()));
             Generation generationForTable = provenance.getGenerationForTable(table);
@@ -71,12 +75,16 @@ title: %s
         return uml.toString();
     }
 
-    private String generateTableForeignKeys(Table table) {
+    private String generateTableForeignKeys(Table table, Provenance provenance) {
         StringBuilder uml = new StringBuilder();
         if (table.getFields() != null) {
             Stream<Field> foreignKeys = table.getFields().stream().filter(t -> t.getForeignKey() != null);
             foreignKeys.forEach(foreignKey -> {
                 uml.append(generateForeignKey(foreignKey.getForeignKey().getTableName(), table.getName()));
+                if (provenance.getTable(foreignKey.getForeignKey().getTableName()) == null) {
+                    // The table is defined in an external provenance file, so we need to add it as an external reference
+                    uml.append("    class %s externalRef\n".formatted(foreignKey.getForeignKey().getTableName()));
+                }
             });
             if (table.getForeignKeys() != null) {
                 table.getForeignKeys().forEach(combinedForeignKey -> {

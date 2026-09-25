@@ -49,7 +49,9 @@ public class ProvenanceGenerator {
                 log.debug("ProvenanceGenerator: Loading provenance file in baseDir: {}, exists={}", provenanceFile.getAbsolutePath(), provenanceFile.exists());
             }
             Provenance provenance = provenanceService.loadProvenance(provenanceFile);
-            validateModel(provenance);
+            List<Provenance> externalProvenanceFiles = new ProvenanceService().loadExternalProvenanceFiles(generatorConfiguration);
+            log.debug("Validating model for generatorConfiguration: {}", generatorConfiguration);
+            validateModel(provenance, externalProvenanceFiles);
             Generator generator = generatorConfiguration.getGenerator();
             generator.generate(provenance, generatorConfiguration);
         } catch (IOException e) {
@@ -58,9 +60,10 @@ public class ProvenanceGenerator {
         }
     }
 
-    private void validateModel(Provenance provenance) {
+    private void validateModel(Provenance provenance, List<Provenance> externalProvenanceFiles) {
         log.debug("Validating provenance model...");
-        ModelValidator modelValidator = new ModelValidator(provenance);
+        log.debug("externalProvenanceFiles: {}", externalProvenanceFiles);
+        ModelValidator modelValidator = new ModelValidator(provenance, externalProvenanceFiles);
         modelValidator.validate();
     }
 

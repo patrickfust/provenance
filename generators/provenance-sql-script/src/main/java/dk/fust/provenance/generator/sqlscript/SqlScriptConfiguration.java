@@ -1,23 +1,20 @@
 package dk.fust.provenance.generator.sqlscript;
 
+import dk.fust.provenance.AbstractGeneratorConfiguration;
 import dk.fust.provenance.Generator;
-import dk.fust.provenance.GeneratorConfiguration;
-import dk.fust.provenance.destination.Destination;
 import dk.fust.provenance.generator.sqlscript.generators.SqlDialect;
 import dk.fust.provenance.util.Assert;
 import lombok.Data;
-
-import java.io.File;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Configuration for generating SQL scripts
  */
 @Data
-public class SqlScriptConfiguration implements GeneratorConfiguration {
-
-    private File provenanceFile;
-
-    private Destination destination;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class SqlScriptConfiguration extends AbstractGeneratorConfiguration {
 
     private String filterTags;
 
@@ -28,9 +25,9 @@ public class SqlScriptConfiguration implements GeneratorConfiguration {
 
     @Override
     public void validate() {
-        Assert.isNotNull(provenanceFile, "provenanceFile must not be null");
-        Assert.isNotNull(destination, "destination must not be null");
-        destination.validate();
+        Assert.isNotNull(getProvenanceFile(), "provenanceFile must not be null");
+        Assert.isNotNull(getDestination(), "destination must not be null");
+        getDestination().validate();
     }
 
     @Override

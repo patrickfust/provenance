@@ -8,8 +8,8 @@ class ModelValidatorSpec extends Specification {
 
     def "test validate empty documentation"() {
         when:
-        Provenance provenance = new Provenance();
-        ModelValidator modelValidator = new ModelValidator(provenance);
+        Provenance provenance = new Provenance()
+        ModelValidator modelValidator = new ModelValidator(provenance, null)
         modelValidator.validate()
 
         then:
@@ -22,7 +22,7 @@ class ModelValidatorSpec extends Specification {
         Provenance documentation = TestHelper.loadTestProvenance(filename)
 
         when:
-        ModelValidator modelValidator = new ModelValidator(documentation)
+        ModelValidator modelValidator = new ModelValidator(documentation, null)
         modelValidator.validate()
 
         then:
@@ -37,6 +37,22 @@ class ModelValidatorSpec extends Specification {
         'foreignKey-wrong-datatype.yaml'             | 'table_b.field_b has different data types (UUID) compared to table_a.field_a (TEXT)'
         'foreignKey-wrong-datatype-generatedId.yaml' | 'table_b.table_b_id has different data types (INT) compared to table_a.field_a (BIGINT)'
         'foreignKeys-table-column-not-exists.yaml'   | 'parent_table.keyDontExists does not exist. Is foreign key in child_with_combined_foreign_keys.pointer_to_parent_key'
+    }
+
+    def "test with external provenance files"() {
+        when:
+        Provenance provenance = TestHelper.loadTestProvenance('provenance-needs-external.yaml')
+        new ModelValidator(provenance, null).validate()
+
+        then: 'missing external provenance files should throw an error'
+        thrown(IllegalArgumentException)
+
+        when:
+        ArrayList<Provenance> externalProvenanceFiles = [TestHelper.loadTestProvenance('provenance-external.yaml')]
+        new ModelValidator(provenance, externalProvenanceFiles).validate()
+
+        then:
+        noExceptionThrown()
     }
 
 }

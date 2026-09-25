@@ -7,6 +7,7 @@ class MockGeneratorConfiguration implements GeneratorConfiguration {
 
     File provenanceFile
     Destination destination
+    List<String> externalProvenanceFiles;
     int anInt
     @MergeWithDefault Integer aBigInteger = 100
     boolean aBoolean
