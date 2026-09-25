@@ -43,7 +43,7 @@ class MermaidGeneratorSpec extends Specification {
                 destination: new MarkdownDestination(
                         file: new File('target/test-external-mermaid.md')
                 ),
-                externalProvenanceFiles: [TestHelper.getTestFile('provenance-erdiagram-external.yaml')]
+                externalProvenanceFiles: [TestHelper.getTestFile('provenance-erdiagram-external.yaml').absolutePath]
         )
         ERDiagramGenerator erDiagramGenerator = new ERDiagramGenerator()
 

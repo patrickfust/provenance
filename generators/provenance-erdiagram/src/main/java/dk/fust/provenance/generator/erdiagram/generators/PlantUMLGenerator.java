@@ -1,9 +1,9 @@
 package dk.fust.provenance.generator.erdiagram.generators;
 
 import dk.fust.provenance.GeneratorConfiguration;
-import dk.fust.provenance.model.Provenance;
 import dk.fust.provenance.model.Field;
 import dk.fust.provenance.model.Generation;
+import dk.fust.provenance.model.Provenance;
 import dk.fust.provenance.model.Table;
 
 import java.util.List;

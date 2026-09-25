@@ -2,8 +2,6 @@ package dk.fust.provenance.generator.datalineage;
 
 import dk.fust.provenance.AbstractGeneratorConfiguration;
 import dk.fust.provenance.Generator;
-import dk.fust.provenance.GeneratorConfiguration;
-import dk.fust.provenance.destination.Destination;
 import dk.fust.provenance.format.table.MarkdownTableFormatter;
 import dk.fust.provenance.format.table.TableFormatter;
 import dk.fust.provenance.util.Assert;
@@ -12,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

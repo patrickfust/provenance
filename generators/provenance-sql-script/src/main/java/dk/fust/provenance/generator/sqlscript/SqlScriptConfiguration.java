@@ -2,15 +2,11 @@ package dk.fust.provenance.generator.sqlscript;
 
 import dk.fust.provenance.AbstractGeneratorConfiguration;
 import dk.fust.provenance.Generator;
-import dk.fust.provenance.GeneratorConfiguration;
-import dk.fust.provenance.destination.Destination;
 import dk.fust.provenance.generator.sqlscript.generators.SqlDialect;
 import dk.fust.provenance.util.Assert;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
-import java.io.File;
 
 /**
  * Configuration for generating SQL scripts

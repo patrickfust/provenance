@@ -41,7 +41,7 @@ class PlantUMLGeneratorSpec extends Specification {
                 destination: new MarkdownDestination(
                         file: new File('target/test-external-plantuml.md')
                 ),
-                externalProvenanceFiles: [TestHelper.getTestFile('provenance-erdiagram-external.yaml')]
+                externalProvenanceFiles: [TestHelper.getTestFile('provenance-erdiagram-external.yaml').absolutePath]
         )
         ERDiagramGenerator erDiagramGenerator = new ERDiagramGenerator()
 
