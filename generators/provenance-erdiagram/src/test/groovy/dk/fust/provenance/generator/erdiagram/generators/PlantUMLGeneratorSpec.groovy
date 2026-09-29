@@ -28,6 +28,10 @@ class PlantUMLGeneratorSpec extends Specification {
         and: 'combined foreign keys are generated as expected'
         uml.contains '$fk("field_b_combined"): int'
         uml.contains 'xxx.table_b::field_b ||--o{ xxx.combined_foreign_key_table::field_b_combined'
+
+        and: 'array and jsonb fields are generated as expected'
+        uml.contains '$column("array_field"): int[]'
+        uml.contains '$column("jsonb_field"): jsonb'
     }
 
     def "generate plantUML ER diagram with external tables"() {

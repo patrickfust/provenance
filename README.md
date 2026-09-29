@@ -99,13 +99,13 @@ The provenance file or files can be yaml- or json-files.
 If you in the beginning of your file add a reference to the schema, so your IDE can validate and have code completion.
 
 ```yaml
-$schema:  https://patrickfust.github.io/provenance/v1/provenance-schema.json
+$schema:  https://patrickfust.github.io/provenance/v2/provenance-schema.json
 ```
 
 Example of a provenance file:
 
 ```yaml
-$schema:  https://patrickfust.github.io/provenance/v1/provenance-schema.json
+$schema:  https://patrickfust.github.io/provenance/v2/provenance-schema.json
 provenanceTitle: My database
 schemaName: theSchema
 tables:
@@ -131,7 +131,7 @@ tables:
 or as JSON:
 ```json
 {
-    "$schema": "https://patrickfust.github.io/provenance/v1/provenance-schema.json",
+    "$schema": "https://patrickfust.github.io/provenance/v2/provenance-schema.json",
     "provenanceTitle": "My database",
     "schemaName": "theSchema",
     "tables": [
@@ -229,3 +229,14 @@ Run the markdown link checker locally:
 ```shell
 python3 scripts/check_markdown_links.py --root .
 ```
+
+## Updating provenance schema
+
+If the api has changed, the schema must be updated.
+
+1. Run `GenerateSchema` located in `helpers/schema-generator/src/main/java/dk/fust/provenance/schema/generator/GenerateSchema.java`
+2. Create a new folder under `site` like `site/v3`
+3. Copy the generated schema from `provenance-api/src/main/resources/provenance-schema.json` to `site/v3/provenance-schema.json`
+4. Add the new version to the `site/index.html` file
+5. Search/replace all occurrences of the old version in the documentation and update to the new version. Like `https://patrickfust.github.io/provenance/v2/provenance-schema.json` to `https://patrickfust.github.io/provenance/v3/provenance-schema.json`
+6. Remember to update the references in provenance-demos as well.

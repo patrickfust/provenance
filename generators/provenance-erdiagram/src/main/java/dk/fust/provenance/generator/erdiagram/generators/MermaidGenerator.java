@@ -55,7 +55,7 @@ title: %s
             }
             if (table.getFields() != null) {
                 table.getFields().forEach(field -> {
-                    uml.append("    %s %s".formatted(field.getDataType(), field.getName()));
+                    uml.append("    %s %s".formatted(field.getDataType().toUpperCase(), field.getName()));
                     if (field.isPrimaryKey()) {
                         uml.append(" PK");
                     }
