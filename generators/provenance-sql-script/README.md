@@ -49,6 +49,7 @@ Provenance
     │   ├── unique
     │   ├── nullable
     │   ├── defaultValue
+    │   ├── defaultValueAsString
     │   └── check
     ├── foreignKeys
     │   ├── tableName
@@ -89,7 +90,7 @@ The `foreignKeys` on the table level, is a list with the following fields:
 | Field            | Type    | Description                                                                                                                                                       | Default     |
 |------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | tableName        | String  | Name of the table that the foreign key references                                                                                                                 |             |
-| columns          | String  | List of columns that points to the foreign table <br/>- `referencingColumn`: Column in current table<br/>- `referenceColumn: Column in the table to be referenced |             |
+| columns          | String  | List of columns that points to the foreign table <br/>- `referencingColumn`: Column in current table<br/>- `referenceColumn`: Column in the table to be referenced |             |
 | enforceReference | Boolean | Whether to enforce the foreign key reference                                                                                                                      |             |
 | onDelete         | String  | [Action](#actions) to take when the referenced row is deleted. <br/>Only active if `enforceReference` is `true`                                                   | `no_action` |
 | onUpdate         | String  | [Action](#actions) to take when the referenced row is updated  <br/>Only active if `enforceReference` is `true`                                                   | `no_action` |
@@ -105,6 +106,38 @@ Theses are the actions available for `onDelete` and `onUpdate`:
 | `restrict`    | Prevents updating the parent key or delete it, if child rows exist                                                       | 
 | `no_action`   | Similar to `restrict`; the update is not allowed if child rows exist. <br/> This means no action is generated in the SQL |
  
+### Default values
+
+If you want the database to provide a default value for a column, you can specify the `defaultValue` field on the field level.
+
+| Field                | Type    | Description                                              | Default |
+|----------------------|---------|----------------------------------------------------------|---------|
+| defaultValue         | String  | The default value to use when inserting a new row.       |         |
+| defaultValueAsString | Boolean | Whether the default value should be treated as a string. | true    |
+
+#### Example for default values
+
+```yaml
+tables:
+  - name: some_table
+    fields:
+      - name: with_default_value_as_string
+        dataType: timestamptz
+        defaultValue: now()
+      - name: with_default_value_not_as_string
+        dataType: timestamptz
+        defaultValue: now()
+        defaultValueAsString: false
+```
+
+will result in the following SQL:
+
+```sql
+create table some_table (
+    with_default_value_as_string timestamptz default 'now()',
+    with_default_value_not_as_string timestamptz default now()
+);
+```
 
 ## Examples
 

@@ -24,7 +24,7 @@ class SqlScriptGeneratorSpec extends Specification {
         noExceptionThrown()
 
         where:
-        directory                      | provenanceFile
+        directory                       | provenanceFile
         'target/test-scripts'           | 'provenance-sqlscript.yaml'
         'target/test-scripts-no-schema' | 'provenance-sqlscript-no-schema.yaml'
     }

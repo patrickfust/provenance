@@ -127,7 +127,11 @@ public class PostgresGenerator implements SqlGenerator {
                 sql.append(generateCascadeAction("delete", field.getForeignKey().getOnDelete()));
             }
             if (field.getDefaultValue() != null && !field.getDefaultValue().isEmpty()) {
-                sql.append(" default '%s'".formatted(field.getDefaultValue()));
+                if (field.isDefaultValueAsString()) {
+                    sql.append(" default '%s'".formatted(field.getDefaultValue()));
+                } else {
+                    sql.append(" default %s".formatted(field.getDefaultValue()));
+                }
             }
             sql.append(generateCheckConstraint(field));
         }
