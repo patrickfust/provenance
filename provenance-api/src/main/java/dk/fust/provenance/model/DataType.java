@@ -117,6 +117,7 @@ public enum DataType {
     ;
 
     /**
+     * Make sure that `_array` is replaced with `[]`
      * We want it to be in lower case when documenting
      * @return the enum in lower case
      */
@@ -125,7 +126,7 @@ public enum DataType {
     }
 
     /**
-     * Make sure that `_array` is replaced with `[]` and the rest is upper case
+     * Uses @see {@link #toLowerCase()} and converts it to upper case
      * @return the enum in upper case
      */
     public String toUpperCase() {
