@@ -117,20 +117,11 @@ public enum DataType {
     ;
 
     /**
-     * Make sure that `_array` is replaced with `[]`
-     * We want it to be in lower case when documenting
-     * @return the enum in lower case
+     * Converts the enum to a string with `_array` replaced with `[]`
+     * @return the enum as a string with `_array` replaced with `[]`
      */
-    public String toLowerCase() {
+    public String convertToBraces() {
         return name().toLowerCase().replace("_array", "[]");
-    }
-
-    /**
-     * Uses @see {@link #toLowerCase()} and converts it to upper case
-     * @return the enum in upper case
-     */
-    public String toUpperCase() {
-        return toLowerCase().toUpperCase();
     }
 
 }

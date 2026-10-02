@@ -77,7 +77,7 @@ hide empty methods
         uml.append("  $table(\"%s\") {\n".formatted(table.getName()));
         Generation generationForTable = provenance.getGenerationForTable(table);
         if (generationForTable.isGenerateId()) {
-            uml.append("    $pk(\"%s_id\"): %s NOT NULL\n".formatted(table.getName(), generationForTable.getGenerateIdDataType().toLowerCase()));
+            uml.append("    $pk(\"%s_id\"): %s NOT NULL\n".formatted(table.getName(), generationForTable.getGenerateIdDataType().convertToBraces().toLowerCase()));
         }
         table.getFields().forEach(field -> {
             if (table.isFieldForeignKey(field.getName(), provenance)) {
@@ -93,7 +93,7 @@ hide empty methods
     }
 
     private static String key(String key, Field field) {
-        return "    $%s(\"%s\"): %s\n".formatted(key, field.getName(), field.getDataType().toLowerCase());
+        return "    $%s(\"%s\"): %s\n".formatted(key, field.getName(), field.getDataType().convertToBraces().toLowerCase());
     }
 
     private static String generateForeignKeys(List<Table> tables, Provenance provenance) {

@@ -69,7 +69,7 @@ public class DataLineageGenerator implements Generator {
 
                 cells.add(new Cell(table.getName()));
                 cells.add(new Cell(field.getName()));
-                cells.add(new Cell(field.getDataType().toLowerCase()));
+                cells.add(new Cell(field.getDataType().convertToBraces().toLowerCase()));
 
                 if (field.getSource() != null) {
                     addCellsForSource(cells, field.getSource(), provenance, configuration);
@@ -104,7 +104,7 @@ public class DataLineageGenerator implements Generator {
         cells.add(new Cell(database));
         cells.add(new Cell(tableName));
         cells.add(new Cell(fieldName));
-        cells.add(new Cell(sourceField.getDataType().toLowerCase()));
+        cells.add(new Cell(sourceField.getDataType().convertToBraces().toLowerCase()));
     }
 
     private Provenance getSourceFieldProvenance(String source, DataLineageConfiguration conf, Provenance provenance) throws IOException {

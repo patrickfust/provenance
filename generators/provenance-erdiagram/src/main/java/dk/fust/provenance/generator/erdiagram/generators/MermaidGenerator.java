@@ -51,11 +51,11 @@ title: %s
             uml.append("%s {\n".formatted(table.getName()));
             Generation generationForTable = provenance.getGenerationForTable(table);
             if (generationForTable.isGenerateId()) {
-                uml.append("    %s %s_id\n".formatted(generationForTable.getGenerateIdDataType().toLowerCase(), table.getName()));
+                uml.append("    %s %s_id\n".formatted(generationForTable.getGenerateIdDataType().convertToBraces().toLowerCase(), table.getName()));
             }
             if (table.getFields() != null) {
                 table.getFields().forEach(field -> {
-                    uml.append("    %s %s".formatted(field.getDataType().toUpperCase(), field.getName()));
+                    uml.append("    %s %s".formatted(field.getDataType().convertToBraces().toUpperCase(), field.getName()));
                     if (field.isPrimaryKey()) {
                         uml.append(" PK");
                     }

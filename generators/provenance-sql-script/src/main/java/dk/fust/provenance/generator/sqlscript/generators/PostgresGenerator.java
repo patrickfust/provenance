@@ -52,7 +52,7 @@ public class PostgresGenerator implements SqlGenerator {
         appendName(schemaName, table.getName(), sql).append(" (\n");
 
         if (generationForTable.hasGenerateId() && generationForTable.getGenerateId()) {
-            sql.append("    %s_id %s primary key generated always as identity".formatted(table.getName(), generationForTable.getGenerateIdDataType().toLowerCase()));
+            sql.append("    %s_id %s primary key generated always as identity".formatted(table.getName(), generationForTable.getGenerateIdDataType().convertToBraces().toLowerCase()));
             hasColumn = true;
         }
         if (generationForTable.getAddCreatedAt() != null && generationForTable.getAddCreatedAt()) {
@@ -107,7 +107,7 @@ public class PostgresGenerator implements SqlGenerator {
             } else {
                 hasColumn = true;
             }
-            sql.append("    %s %s".formatted(field.getName(), field.getDataType().toLowerCase()));
+            sql.append("    %s %s".formatted(field.getName(), field.getDataType().convertToBraces().toLowerCase()));
             if (field.isUnique()) {
                 sql.append(" unique");
             }
