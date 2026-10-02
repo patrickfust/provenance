@@ -30,6 +30,10 @@ class MermaidGeneratorSpec extends Specification {
     INT field_b_combined FK
 }'''
         uml.contains 'table_b ||--o{ combined_foreign_key_table : ""\n'
+
+        and: 'array and jsonb fields are generated as expected'
+        uml.contains 'INT[] array_field'
+        uml.contains 'JSONB jsonb_field'
     }
 
     def "generate mermaid ER diagram with external tables"() {

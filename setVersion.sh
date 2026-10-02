@@ -14,7 +14,7 @@ NEW_VERSION="$1"
 echo "[INFO] Setting version to $NEW_VERSION..."
 
 echo "[INFO] Updating pom.xml..."
-./mvnw -N -Pset-version versions:set -DnewVersion="$NEW_VERSION"
+./mvnw -Pset-version versions:set -DnewVersion="$NEW_VERSION"
 echo "[INFO] Successfully updated pom.xml files"
 
 echo "[INFO] Updating jreleaser.yml..."

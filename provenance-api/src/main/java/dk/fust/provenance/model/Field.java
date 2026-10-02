@@ -34,6 +34,9 @@ public class Field {
     @Description("Default value when inserting in the database")
     private String defaultValue;
 
+    @Description(value = "Indicates if the default value is represented as a string", hasDefaultBoolean = true, defaultBoolean = true)
+    private boolean defaultValueAsString = true;
+
     @Description("Constraint on the values")
     private List<String> check;
 

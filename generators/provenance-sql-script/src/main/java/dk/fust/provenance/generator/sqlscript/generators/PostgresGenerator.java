@@ -52,7 +52,7 @@ public class PostgresGenerator implements SqlGenerator {
         appendName(schemaName, table.getName(), sql).append(" (\n");
 
         if (generationForTable.hasGenerateId() && generationForTable.getGenerateId()) {
-            sql.append("    %s_id %s primary key generated always as identity".formatted(table.getName(), generationForTable.getGenerateIdDataType().toLowerCase()));
+            sql.append("    %s_id %s primary key generated always as identity".formatted(table.getName(), generationForTable.getGenerateIdDataType().convertToBraces().toLowerCase()));
             hasColumn = true;
         }
         if (generationForTable.getAddCreatedAt() != null && generationForTable.getAddCreatedAt()) {
@@ -107,7 +107,7 @@ public class PostgresGenerator implements SqlGenerator {
             } else {
                 hasColumn = true;
             }
-            sql.append("    %s %s".formatted(field.getName(), field.getDataType().toLowerCase()));
+            sql.append("    %s %s".formatted(field.getName(), field.getDataType().convertToBraces().toLowerCase()));
             if (field.isUnique()) {
                 sql.append(" unique");
             }
@@ -127,7 +127,11 @@ public class PostgresGenerator implements SqlGenerator {
                 sql.append(generateCascadeAction("delete", field.getForeignKey().getOnDelete()));
             }
             if (field.getDefaultValue() != null && !field.getDefaultValue().isEmpty()) {
-                sql.append(" default '%s'".formatted(field.getDefaultValue()));
+                if (field.isDefaultValueAsString()) {
+                    sql.append(" default '%s'".formatted(field.getDefaultValue()));
+                } else {
+                    sql.append(" default %s".formatted(field.getDefaultValue()));
+                }
             }
             sql.append(generateCheckConstraint(field));
         }

@@ -74,6 +74,20 @@ class PostgresGeneratorSpec extends Specification {
         someTable.contains('field_with_specific_collate text collate "C"')
     }
 
+    def "generate with default value as string"() {
+        setup:
+        String outputDirectory = 'target/test-scripts-default-value-as-string'
+
+        when:
+        generate('provenance-sqlscript-default-value-as-string.yaml', outputDirectory)
+
+        then:
+        noExceptionThrown()
+        String someTable = new File(outputDirectory, 'some_table.sql').text
+        someTable.contains("with_default_value_as_string timestamptz default 'now()',")
+        someTable.contains('with_default_value_not_as_string timestamptz default now()')
+    }
+
     private void generate(String provenanceFile, String outputDirectory) {
         PostgresGenerator generator = new PostgresGenerator()
         Provenance provenance = TestHelper.loadTestProvenance(provenanceFile)

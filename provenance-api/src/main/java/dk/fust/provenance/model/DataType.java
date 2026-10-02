@@ -23,7 +23,7 @@ public enum DataType {
     /**
      * Array of dates
      */
-    DATA_ARRAY,
+    DATE_ARRAY,
 
     /**
      * Timestamp
@@ -83,13 +83,45 @@ public enum DataType {
     /**
      * Array of UUIDs
      */
-    UUID_ARRAY;
+    UUID_ARRAY,
 
     /**
-     * We want it to be in lower case when documenting
-     * @return the enum in lower case
+     * JSON
      */
-    public String toLowerCase() {
+    JSON,
+
+    /**
+     * Array of JSON
+     */
+    JSON_ARRAY,
+
+    /**
+     * JSONB
+     */
+    JSONB,
+
+    /**
+     * Array of JSONB
+     */
+    JSONB_ARRAY,
+
+    /**
+     * JSONPATH
+     */
+    JSONPATH,
+
+    /**
+     * Array of JSONPATH
+     */
+    JSONPATH_ARRAY
+    ;
+
+    /**
+     * Converts the enum to a string with `_array` replaced with `[]`
+     * @return the enum as a string with `_array` replaced with `[]`
+     */
+    public String convertToBraces() {
         return name().toLowerCase().replace("_array", "[]");
     }
+
 }

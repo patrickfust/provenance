@@ -49,11 +49,11 @@ class TestData {
                                 cells: [
                                         new Cell(content: 'table_a'),
                                         new Cell(content: 'column_a'),
-                                        new Cell(content: DataType.INT.toLowerCase()),
+                                        new Cell(content: DataType.INT.convertToBraces().toLowerCase()),
                                         new Cell(content: 'database name'),
                                         new Cell(content: 'table_b'),
                                         new Cell(content: 'column_b'),
-                                        new Cell(content: DataType.TEXT.toLowerCase()),
+                                        new Cell(content: DataType.TEXT.convertToBraces().toLowerCase()),
                                         new Cell(content: 'some transformation')
                                 ]
                         )

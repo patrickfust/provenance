@@ -19,6 +19,10 @@ tables:
         foreignKey:
           tableName: table_b
           columnName: field_b
+      - name: array_field
+        dataType: int_array
+      - name: jsonb_field
+        dataType: jsonb
   - name: table_b
     fields:
       - name: field_b
