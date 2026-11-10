@@ -37,6 +37,27 @@ class ModelValidatorSpec extends Specification {
         'foreignKey-wrong-datatype.yaml'             | 'table_b.field_b has different data types (UUID) compared to table_a.field_a (TEXT)'
         'foreignKey-wrong-datatype-generatedId.yaml' | 'table_b.table_b_id has different data types (INT) compared to table_a.field_a (BIGINT)'
         'foreignKeys-table-column-not-exists.yaml'   | 'parent_table.keyDontExists does not exist. Is foreign key in child_with_combined_foreign_keys.pointer_to_parent_key'
+        'multiple-with-same-tablename.yaml'          | 'Table name table_a is used multiple times'
+    }
+
+    @Unroll
+    def "test sunshine validations for #filename"() {
+        given:
+        Provenance documentation = TestHelper.loadTestProvenance(filename)
+
+        when:
+        ModelValidator modelValidator = new ModelValidator(documentation, null)
+        modelValidator.validate()
+
+        then:
+        noExceptionThrown()
+
+        where:
+        filename << [
+                'foreignKey-sunshine-generatedId-general.yaml',
+                'foreignKey-sunshine-generatedId-on-table.yaml',
+                'foreignKey-sunshine-generatedId-on-table-and-general.yaml'
+        ]
     }
 
     def "test with external provenance files"() {
