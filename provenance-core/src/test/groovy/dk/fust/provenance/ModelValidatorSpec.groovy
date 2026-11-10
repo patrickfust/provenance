@@ -39,6 +39,26 @@ class ModelValidatorSpec extends Specification {
         'foreignKeys-table-column-not-exists.yaml'   | 'parent_table.keyDontExists does not exist. Is foreign key in child_with_combined_foreign_keys.pointer_to_parent_key'
     }
 
+    @Unroll
+    def "test sunshine validations for #filename"() {
+        given:
+        Provenance documentation = TestHelper.loadTestProvenance(filename)
+
+        when:
+        ModelValidator modelValidator = new ModelValidator(documentation, null)
+        modelValidator.validate()
+
+        then:
+        noExceptionThrown()
+
+        where:
+        filename << [
+                'foreignKey-sunshine-generatedId-general.yaml',
+                'foreignKey-sunshine-generatedId-on-table.yaml',
+                'foreignKey-sunshine-generatedId-on-table-and-general.yaml'
+        ]
+    }
+
     def "test with external provenance files"() {
         when:
         Provenance provenance = TestHelper.loadTestProvenance('provenance-needs-external.yaml')
