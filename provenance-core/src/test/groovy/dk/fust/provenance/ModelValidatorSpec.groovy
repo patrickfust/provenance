@@ -37,6 +37,7 @@ class ModelValidatorSpec extends Specification {
         'foreignKey-wrong-datatype.yaml'             | 'table_b.field_b has different data types (UUID) compared to table_a.field_a (TEXT)'
         'foreignKey-wrong-datatype-generatedId.yaml' | 'table_b.table_b_id has different data types (INT) compared to table_a.field_a (BIGINT)'
         'foreignKeys-table-column-not-exists.yaml'   | 'parent_table.keyDontExists does not exist. Is foreign key in child_with_combined_foreign_keys.pointer_to_parent_key'
+        'multiple-with-same-tablename.yaml'          | 'Table name table_a is used multiple times'
     }
 
     @Unroll

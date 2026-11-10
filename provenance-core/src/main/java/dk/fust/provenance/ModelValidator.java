@@ -65,7 +65,14 @@ public class ModelValidator {
 
     private void validateTables() {
         if (provenance.getTables() != null) {
-            provenance.getTables().forEach(this::validateTable);
+            List<String> tableNames = new ArrayList<>();
+            provenance.getTables().forEach(table -> {
+                if (tableNames.contains(table.getName())) {
+                    throw new IllegalArgumentException("Table name " + table.getName() + " is used multiple times");
+                }
+                tableNames.add(table.getName());
+                validateTable(table);
+            });
         }
     }
 
